@@ -1,0 +1,28 @@
+{
+  "name": "patikampus-proje",
+  "version": "1.0.0",
+  "description": "Bu proje, geri beslemeli bir porsiyonlama algoritması ve IoT tabanlı anlık veri takibi kullanmaktadır. Sistemin teknik akış diyagramı aşağıdadır:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/patikampus/PatiKampus-Proje.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/patikampus/PatiKampus-Proje/issues"
+  },
+  "homepage": "https://github.com/patikampus/PatiKampus-Proje#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mssql": "^12.2.0"
+  }
+}
