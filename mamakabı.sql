@@ -66,12 +66,6 @@ CREATE TABLE Anomaliler (
     FOREIGN KEY (MamaKabiId)
     REFERENCES MamaKaplari(MamaKabiId)
     ON DELETE CASCADE
-    ON UPDATE RESTRICT,
-
-  CONSTRAINT FK_Anomali_Sensor
-    FOREIGN KEY (SensorId)
-    REFERENCES SensorVerileri(SensorId)
-    ON DELETE SET NULL
     ON UPDATE RESTRICT
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -203,3 +197,11 @@ CREATE TABLE KapiAktivasyonGecmisi (
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Not: SensorVerileri tablosu daha sonra oluşturulduğu için FK sonradan eklenir
+ALTER TABLE Anomaliler
+  ADD CONSTRAINT FK_Anomali_Sensor
+  FOREIGN KEY (SensorId)
+  REFERENCES SensorVerileri(SensorId)
+  ON DELETE SET NULL
+  ON UPDATE RESTRICT;
