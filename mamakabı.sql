@@ -198,10 +198,33 @@ CREATE TABLE KapiAktivasyonGecmisi (
     ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Not: SensorVerileri tablosu daha sonra oluşturulduğu için FK sonradan eklenir
+-- 12) Anomaliler
 ALTER TABLE Anomaliler
   ADD CONSTRAINT FK_Anomali_Sensor
   FOREIGN KEY (SensorId)
   REFERENCES SensorVerileri(SensorId)
   ON DELETE SET NULL
+
   ON UPDATE RESTRICT;
+
+
+-- kullanmak istediğiniz fotoğraflar tablosunu seçin
+-- 13) fotoğraflar tablosu
+CREATE TABLE MamaEklemeFotograflari (
+  FotoId     BIGINT AUTO_INCREMENT PRIMARY KEY,
+  KayitId    BIGINT NOT NULL,
+  FotoUrl    VARCHAR(1000) NOT NULL,
+  YuklemeZamani DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  INDEX IX_MEF_Kayit (KayitId),
+
+  CONSTRAINT FK_MEF_Kayit
+    FOREIGN KEY (KayitId)
+    REFERENCES MamaEklemeKayitlari(KayitId)
+    ON DELETE CASCADE
+    ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--13.1) fotoğraflar tablosu (opsiyonel )
+ALTER TABLE MamaEklemeKayitlari
+ADD COLUMN FotoUrl VARCHAR(1000) NULL AFTER EklenenMiktarKg;
