@@ -78,11 +78,11 @@ CREATE TABLE SensorVerileri (
   SensorId            BIGINT AUTO_INCREMENT PRIMARY KEY,
   MamaKabiId          INT NOT NULL,
   OlcumZamani         DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  Agirlik             DECIMAL(6,2) NULL,
+  İçHazneAgirlik      DECIMAL(6,2) NULL,
+  DışHazneAgirlik     DECIMAL(6,2) NULL,
   Yukseklik           DECIMAL(6,2) NULL,
   SonMamaEklemeZamani DATETIME NULL,
   KapAktifMi          TINYINT(1) NULL,
-  Konum               VARCHAR(255) NULL,
 
   INDEX IX_Sensor_MamaKabi (MamaKabiId),
   INDEX IX_Sensor_OlcumZamani (OlcumZamani),
@@ -103,10 +103,13 @@ CREATE TABLE Anomaliler (
   Agirlik       DECIMAL(6,2) NULL,
   Yukseklik     DECIMAL(6,2) NULL,
 
+  Durum         ENUM('ACIK','INCELEMEDE','COZULDU') NOT NULL DEFAULT 'ACIK',
+
   INDEX IX_Anomali_MamaKabi (MamaKabiId),
   INDEX IX_Anomali_Sensor (SensorId),
   INDEX IX_Anomali_Zaman (AnomaliZamani),
-
+  INDEX IX_Anomali_Durum (Durum),
+  
   CONSTRAINT FK_Anomali_MamaKabi
     FOREIGN KEY (MamaKabiId)
     REFERENCES MamaKaplari(MamaKabiId)
@@ -254,3 +257,4 @@ CREATE TABLE KapiAktivasyonGecmisi (
     ON DELETE CASCADE
     ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
