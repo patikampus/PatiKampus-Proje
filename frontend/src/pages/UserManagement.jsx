@@ -4,6 +4,7 @@ import GlassCard from '../components/GlassCard';
 import Badge from '../components/Badge';
 import GlassButton from '../components/GlassButton';
 import { getAllUsers } from '../api/user';
+import { usersMock } from '../utils/mockData/usersMock';
 
 const UserManagement = () => {
   const [activeTab, setActiveTab] = useState('users');
@@ -17,7 +18,8 @@ const UserManagement = () => {
         const data = await getAllUsers();
         setUsers(data.data || []);
       } catch (e) {
-        setUsers([]);
+        // API'den veri gelmezse mock datayı kullan
+        setUsers(usersMock);
       }
       setLoading(false);
     };

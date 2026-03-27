@@ -5,6 +5,8 @@ import Badge from '../components/Badge';
 import GlassButton from '../components/GlassButton';
 import { getPendingPhotoRequests, approvePhoto, rejectPhoto } from '../api/review';
 import { getFeedbacks } from '../api/feedback';
+import { pendingPhotoRequestsMock } from '../utils/mockData/pendingPhotoRequestsMock';
+import { feedbacksMock } from '../utils/mockData/feedbacksMock';
 
 const Review = () => {
   const [photoRequests, setPhotoRequests] = useState([]);
@@ -20,8 +22,9 @@ const Review = () => {
         const feedbackData = await getFeedbacks();
         setFeedbacks(feedbackData.data || []);
       } catch (e) {
-        setPhotoRequests([]);
-        setFeedbacks([]);
+        // API'den veri gelmezse mock dataları kullan
+        setPhotoRequests(pendingPhotoRequestsMock);
+        setFeedbacks(feedbacksMock);
       }
       setLoading(false);
     };

@@ -5,6 +5,8 @@ import GlassCard from '../components/GlassCard';
 import Badge from '../components/Badge';
 import GlassButton from '../components/GlassButton';
 import { getMamaKaplari, getSonSensorVerisi, getSensorVerileri } from '../api/device';
+import { mamaKabiMock } from '../utils/mockData/mamaKabiMock';
+import { sensorVeriFullMock } from '../utils/mockData/sensorVeriFullMock';
 
 const DevicePanel = () => {
   const [mamaKaplari, setMamaKaplari] = useState([]);
@@ -16,10 +18,18 @@ const DevicePanel = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const kaplar = await getMamaKaplari();
-      setMamaKaplari(kaplar);
-      if (kaplar.length > 0) {
-        setSelectedKapi(kaplar[0]);
+      try {
+        const kaplar = await getMamaKaplari();
+        setMamaKaplari(kaplar);
+        if (kaplar.length > 0) {
+          setSelectedKapi(kaplar[0]);
+        }
+      } catch (e) {
+        // API'den veri gelmezse mock datayı kullan
+        setMamaKaplari(mamaKabiMock);
+        if (mamaKabiMock.length > 0) {
+          setSelectedKapi(mamaKabiMock[0]);
+        }
       }
       setLoading(false);
     };
@@ -29,10 +39,17 @@ const DevicePanel = () => {
   useEffect(() => {
     if (!selectedKapi) return;
     const fetchSensor = async () => {
-      const sonVeri = await getSonSensorVerisi(selectedKapi.MamaKabiId);
-      setSensorData(sonVeri);
-      const logs = await getSensorVerileri(selectedKapi.MamaKabiId);
-      setSensorLogs(logs);
+      try {
+        const sonVeri = await getSonSensorVerisi(selectedKapi.MamaKabiId);
+        setSensorData(sonVeri);
+        const logs = await getSensorVerileri(selectedKapi.MamaKabiId);
+        setSensorLogs(logs);
+      } catch (e) {
+        // API'den veri gelmezse mock sensör verisi kullan
+        const logs = sensorVeriFullMock.filter(x => x.MamaKabiId === selectedKapi.MamaKabiId);
+        setSensorLogs(logs);
+        setSensorData(logs[0] || null);
+      }
     };
     fetchSensor();
   }, [selectedKapi]);
