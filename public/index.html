@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>PatiKampüs - Giriş</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; }
+        .login-box { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 300px; }
+        h2 { text-align: center; color: #333; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        .error { color: red; text-align: center; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="login-box">
+    <h2>PatiKampüs Giriş</h2>
+    <input type="email" id="email" placeholder="E-posta Adresi" value="admin@mama.com">
+    <input type="password" id="sifre" placeholder="Şifre" value="123123">
+    <button onclick="girisYap()">Giriş Yap</button>
+    <p id="hataMesaji" class="error"></p>
+</div>
+
+<script>
+    async function girisYap() {
+        const email = document.getElementById('email').value;
+        const sifre = document.getElementById('sifre').value;
+        const hataKutusu = document.getElementById('hataMesaji');
+
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, sifre })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('adSoyad', data.ad);
+                window.location.href = '/panel.html';
+            } else {
+                hataKutusu.innerText = data.message || "Giriş başarısız.";
+                hataKutusu.style.display = 'block';
+            }
+        } catch (err) {
+            hataKutusu.innerText = "Sunucuya bağlanılamadı.";
+            hataKutusu.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>PatiKampüs - Panel</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
+        h1 { color: #333; }
+        .welcome { color: #666; margin-bottom: 30px; }
+        .action-area { border: 2px dashed #007bff; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        button { padding: 15px 30px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; }
+        button:hover { background-color: #218838; }
+        .logout-btn { background-color: #dc3545; font-size: 14px; padding: 8px 15px; margin-top: 20px; }
+        #sonuc { margin-top: 20px; font-weight: bold; color: #28a745; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Akıllı Mama Kabı Sistemi</h1>
+    <p class="welcome">Hoşgeldin, <span id="kullaniciAdi">...</span></p>
+
+    <div class="action-area">
+        <h3>QR Simülasyonu</h3>
+        <p>Telefondan QR okutmuş gibi işlem yap:</p>
+        <button onclick="qrIslemiYap()">🫗 Mama Ekle (QR Okut)</button>
+        <p id="sonuc"></p>
+    </div>
+
+    <button class="logout-btn" onclick="cikisYap()">Çıkış Yap</button>
+</div>
+
+<script>
+    window.onload = function() {
+        const token = localStorage.getItem('token');
+        const ad = localStorage.getItem('adSoyad');
+
+        if (!token) {
+            window.location.href = '/index.html';
+            return;
+        }
+        document.getElementById('kullaniciAdi').innerText = ad;
+    }
+
+    async function qrIslemiYap() {
+        const token = localStorage.getItem('token');
+        const sonucKutusu = document.getElementById('sonuc');
+        
+        sonucKutusu.innerText = "İşleniyor...";
+
+        try {
+            const response = await fetch('/api/mama-kabi/qr-okut', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-auth-token': token 
+                },
+                body: JSON.stringify({ 
+                    mamaKabiId: 1, 
+                    eklenenMiktar: 1.5 
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                sonucKutusu.innerText = `✅ ${data.message} (+${data.kazanilanPuan} Puan)`;
+            } else {
+                sonucKutusu.innerText = `❌ Hata: ${data.error || data.message}`;
+                sonucKutusu.style.color = 'red';
+            }
+
+        } catch (err) {
+            console.error(err);
+            sonucKutusu.innerText = "❌ Bağlantı hatası!";
+        }
+    }
+
+    function cikisYap() {
+        localStorage.removeItem('token');
+        window.location.href = '/index.html';
+    }
+</script>
+
+</body>
+</html>
