@@ -88,10 +88,14 @@ const sensorVeriCreateValidation = [
   body('MamaKabiId')
     .isInt()
     .withMessage('MamaKabiId gerekli ve sayı olmalı'),
-  body('Agirlik')
+  body(['IcHazneAgirlik', 'İçHazneAgirlik'])
     .optional()
     .isFloat({ min: 0 })
-    .withMessage('Ağırlık 0 veya pozitif bir sayı olmalı'),
+    .withMessage('İç hazne ağırlığı 0 veya pozitif bir sayı olmalı'),
+  body(['DisHazneAgirlik', 'DışHazneAgirlik'])
+    .optional()
+    .isFloat({ min: 0 })
+    .withMessage('Dış hazne ağırlığı 0 veya pozitif bir sayı olmalı'),
   body('Yukseklik')
     .optional()
     .isFloat({ min: 0 })

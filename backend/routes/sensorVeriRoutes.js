@@ -40,7 +40,7 @@ router.get('/mama-kabi/:mamaKabiId', sensorVeriController.getByMamaKabiId);
  * @desc    Mama kabının en son sensör verisini getirir
  * @access  Public
  * @param   {number} mamaKabiId - Mama kabı ID
- * @returns {object} En son sensör verisi { Agirlik, Yukseklik, OlcumZamani }
+ * @returns {object} En son sensör verisi { IcHazneAgirlik, DisHazneAgirlik, Yukseklik, OlcumZamani }
  */
 router.get('/mama-kabi/:mamaKabiId/son', sensorVeriController.getLatest);
 
@@ -61,7 +61,7 @@ router.get('/mama-kabi/:mamaKabiId/tarih-araligi', sensorVeriController.getByDat
  * @access  Public
  * @param   {number} mamaKabiId - Mama kabı ID
  * @query   {number} [days=7] - Kaç günlük istatistik
- * @returns {object} { avgAgirlik, minAgirlik, maxAgirlik, avgYukseklik, olcumSayisi }
+ * @returns {object} { avgIcHazneAgirlik, minIcHazneAgirlik, maxIcHazneAgirlik, avgDisHazneAgirlik, minDisHazneAgirlik, maxDisHazneAgirlik, avgYukseklik, olcumSayisi }
  */
 router.get('/mama-kabi/:mamaKabiId/istatistik', sensorVeriController.getStatistics);
 
@@ -81,7 +81,8 @@ router.get('/:id', idParamValidation, sensorVeriController.getById);
  * @desc    Yeni sensör verisi kaydeder (IoT cihazından)
  * @access  Public (Production'da API key ile güvence altına alınmalı)
  * @body    {number} MamaKabiId - Mama kabı ID (zorunlu)
- * @body    {number} [Agirlik] - Ağırlık değeri (kg)
+ * @body    {number} [IcHazneAgirlik] - İç hazne ağırlık değeri (kg)
+ * @body    {number} [DisHazneAgirlik] - Dış hazne ağırlık değeri (kg)
  * @body    {number} [Yukseklik] - Yükseklik değeri (cm)
  * @returns {object} Kaydedilen sensör verisi
  * @note    Ani değişikliklerde otomatik anomali kaydı oluşturur

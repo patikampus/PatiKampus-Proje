@@ -157,7 +157,7 @@ class MamaKabiService {
         limit: 1,
         order: [['OlcumZamani', 'DESC']],
         where: {
-          Agirlik: { [Op.lt]: threshold }
+          IcHazneAgirlik: { [Op.lt]: threshold }
         }
       }]
     });

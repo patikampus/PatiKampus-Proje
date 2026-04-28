@@ -2,18 +2,20 @@ import { SensorVeri, MamaKabi } from '../models/index.js';
 import { Op, fn, col } from 'sequelize';
 import anomaliService from './anomaliService.js';
 
+const toNumber = (v) => (v === null || v === undefined ? null : parseFloat(v));
+
 class SensorVeriService {
   // Tüm sensör verilerini getir
   async getAll(options = {}) {
     const { page = 1, limit = 20, mamaKabiId, startDate, endDate } = options;
     const offset = (page - 1) * limit;
-    
+
     const where = {};
-    
+
     if (mamaKabiId) {
       where.MamaKabiId = mamaKabiId;
     }
-    
+
     if (startDate && endDate) {
       where.OlcumZamani = {
         [Op.between]: [new Date(startDate), new Date(endDate)]
@@ -48,7 +50,7 @@ class SensorVeriService {
 
   // Yeni sensör verisi oluştur (IoT cihazından gelen veri)
   async create(sensorData) {
-    const { MamaKabiId, Agirlik, Yukseklik } = sensorData;
+    const { MamaKabiId } = sensorData;
 
     // Mama kabı var mı kontrol et
     const mamaKabi = await MamaKabi.findByPk(MamaKabiId);
@@ -58,11 +60,15 @@ class SensorVeriService {
 
     // Son veriyi al ve anomali kontrolü yap
     const lastData = await this.getLatestByMamaKabiId(MamaKabiId);
-    
+
     const newSensorVeri = await SensorVeri.create({
-      ...sensorData,
-      KapAktifMi: mamaKabi.AktifMi,
-      Konum: mamaKabi.Konum
+      MamaKabiId,
+      OlcumZamani: sensorData.OlcumZamani,
+      IcHazneAgirlik: sensorData.IcHazneAgirlik ?? sensorData['İçHazneAgirlik'],
+      DisHazneAgirlik: sensorData.DisHazneAgirlik ?? sensorData['DışHazneAgirlik'],
+      Yukseklik: sensorData.Yukseklik,
+      SonMamaEklemeZamani: sensorData.SonMamaEklemeZamani,
+      KapAktifMi: mamaKabi.AktifMi
     });
 
     // Anomali kontrolü
@@ -75,23 +81,24 @@ class SensorVeriService {
 
   // Anomali kontrolü
   async checkAndCreateAnomaly(lastData, newData) {
-    const agirlikFark = lastData.Agirlik && newData.Agirlik 
-      ? Math.abs(parseFloat(lastData.Agirlik) - parseFloat(newData.Agirlik))
-      : 0;
-    
-    const yukseklikFark = lastData.Yukseklik && newData.Yukseklik
-      ? Math.abs(parseFloat(lastData.Yukseklik) - parseFloat(newData.Yukseklik))
-      : 0;
+    const lastIc = toNumber(lastData.IcHazneAgirlik);
+    const newIc = toNumber(newData.IcHazneAgirlik);
+    const lastYuk = toNumber(lastData.Yukseklik);
+    const newYuk = toNumber(newData.Yukseklik);
+
+    const agirlikFark = lastIc != null && newIc != null ? Math.abs(lastIc - newIc) : 0;
+    const yukseklikFark = lastYuk != null && newYuk != null ? Math.abs(lastYuk - newYuk) : 0;
 
     // Ani değişim varsa anomali oluştur (örn: %50'den fazla değişim)
-    const anomaliOlustu = agirlikFark > (parseFloat(lastData.Agirlik) * 0.5) ||
-                          yukseklikFark > (parseFloat(lastData.Yukseklik) * 0.5);
+    const anomaliOlustu =
+      (lastIc != null && lastIc > 0 && agirlikFark > lastIc * 0.5) ||
+      (lastYuk != null && lastYuk > 0 && yukseklikFark > lastYuk * 0.5);
 
     if (anomaliOlustu) {
       await anomaliService.create({
         MamaKabiId: newData.MamaKabiId,
         SensorId: newData.SensorId,
-        Agirlik: newData.Agirlik,
+        Agirlik: newData.IcHazneAgirlik,
         Yukseklik: newData.Yukseklik
       });
     }
@@ -140,9 +147,12 @@ class SensorVeriService {
         }
       },
       attributes: [
-        [fn('AVG', col('Agirlik')), 'avgAgirlik'],
-        [fn('MIN', col('Agirlik')), 'minAgirlik'],
-        [fn('MAX', col('Agirlik')), 'maxAgirlik'],
+        [fn('AVG', col('İçHazneAgirlik')), 'avgIcHazneAgirlik'],
+        [fn('MIN', col('İçHazneAgirlik')), 'minIcHazneAgirlik'],
+        [fn('MAX', col('İçHazneAgirlik')), 'maxIcHazneAgirlik'],
+        [fn('AVG', col('DışHazneAgirlik')), 'avgDisHazneAgirlik'],
+        [fn('MIN', col('DışHazneAgirlik')), 'minDisHazneAgirlik'],
+        [fn('MAX', col('DışHazneAgirlik')), 'maxDisHazneAgirlik'],
         [fn('AVG', col('Yukseklik')), 'avgYukseklik'],
         [fn('COUNT', col('SensorId')), 'olcumSayisi']
       ]

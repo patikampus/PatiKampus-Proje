@@ -20,9 +20,15 @@ const SensorVeri = sequelize.define('SensorVerileri', {
     allowNull: false,
     defaultValue: DataTypes.NOW
   },
-  Agirlik: {
+  IcHazneAgirlik: {
     type: DataTypes.DECIMAL(6, 2),
-    allowNull: true
+    allowNull: true,
+    field: 'İçHazneAgirlik'
+  },
+  DisHazneAgirlik: {
+    type: DataTypes.DECIMAL(6, 2),
+    allowNull: true,
+    field: 'DışHazneAgirlik'
   },
   Yukseklik: {
     type: DataTypes.DECIMAL(6, 2),
@@ -34,10 +40,6 @@ const SensorVeri = sequelize.define('SensorVerileri', {
   },
   KapAktifMi: {
     type: DataTypes.TINYINT,
-    allowNull: true
-  },
-  Konum: {
-    type: DataTypes.STRING(255),
     allowNull: true
   }
 }, {
