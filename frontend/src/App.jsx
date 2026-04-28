@@ -4,6 +4,9 @@ import UserManagement from './pages/UserManagement';
 import Review from './pages/Review';
 import DevicePanel from './pages/DevicePanel';
 import Login from './pages/Login';
+import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -11,7 +14,10 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<Login />} />
-        
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
         {/* Protected Routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<Dashboard />} />

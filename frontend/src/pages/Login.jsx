@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../api/auth';
 import { FaPaw } from 'react-icons/fa';
 
@@ -126,6 +126,15 @@ function Login() {
               >
                 {isLoading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
               </button>
+            </div>
+
+            <div className="flex items-center justify-between text-sm pt-2">
+              <Link to="/forgot-password" className="text-white/60 hover:text-white">
+                Şifremi unuttum
+              </Link>
+              <Link to="/register" className="text-purple-300 hover:text-purple-200 font-medium">
+                Kayıt Ol
+              </Link>
             </div>
           </form>
         </div>
