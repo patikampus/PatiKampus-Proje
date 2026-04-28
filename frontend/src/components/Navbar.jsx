@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const navItems = [
   { path: '/', label: 'Dashboard' },
@@ -9,6 +9,15 @@ const navItems = [
 ];
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
+
   return (
     <nav className="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-full max-w-fit px-4">
       <div className="relative group">
@@ -53,6 +62,14 @@ const Navbar = () => {
                 )}
               </NavLink>
             ))}
+            
+            {/* Çıkış Yap Butonu */}
+            <button
+              onClick={handleLogout}
+              className="relative px-4 py-2 ml-2 rounded-xl transition-all duration-500 text-sm font-medium overflow-hidden whitespace-nowrap shrink-0 text-red-400 hover:text-white hover:bg-red-500/20"
+            >
+              Çıkış Yap
+            </button>
           </div>
         </div>
       </div>
