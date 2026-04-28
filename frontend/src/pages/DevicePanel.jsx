@@ -5,8 +5,6 @@ import GlassCard from '../components/GlassCard';
 import Badge from '../components/Badge';
 import GlassButton from '../components/GlassButton';
 import { getMamaKaplari, getSonSensorVerisi, getSensorVerileri } from '../api/device';
-import { mamaKabiMock } from '../utils/mockData/mamaKabiMock';
-import { sensorVeriFullMock } from '../utils/mockData/sensorVeriFullMock';
 
 const DevicePanel = () => {
   const [mamaKaplari, setMamaKaplari] = useState([]);
@@ -25,11 +23,7 @@ const DevicePanel = () => {
           setSelectedKapi(kaplar[0]);
         }
       } catch (e) {
-        // API'den veri gelmezse mock datayı kullan
-        setMamaKaplari(mamaKabiMock);
-        if (mamaKabiMock.length > 0) {
-          setSelectedKapi(mamaKabiMock[0]);
-        }
+        console.error("Cihazlar alınamadı", e);
       }
       setLoading(false);
     };
@@ -45,10 +39,7 @@ const DevicePanel = () => {
         const logs = await getSensorVerileri(selectedKapi.MamaKabiId);
         setSensorLogs(logs);
       } catch (e) {
-        // API'den veri gelmezse mock sensör verisi kullan
-        const logs = sensorVeriFullMock.filter(x => x.MamaKabiId === selectedKapi.MamaKabiId);
-        setSensorLogs(logs);
-        setSensorData(logs[0] || null);
+        console.error("Sensör verileri alınamadı", e);
       }
     };
     fetchSensor();

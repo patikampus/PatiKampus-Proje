@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import PageLayout from './layout/PageLayout';
+import PageLayout from '../layout/PageLayout';
 
 const ProtectedRoute = () => {
   const token = localStorage.getItem('token');

@@ -4,7 +4,6 @@ import GlassCard from '../components/GlassCard';
 import Badge from '../components/Badge';
 import GlassButton from '../components/GlassButton';
 import { getAllUsers } from '../api/user';
-import { usersMock } from '../utils/mockData/usersMock';
 
 const UserManagement = () => {
   const [activeTab, setActiveTab] = useState('users');
@@ -18,19 +17,15 @@ const UserManagement = () => {
         const data = await getAllUsers();
         setUsers(data.data || []);
       } catch (e) {
-        // API'den veri gelmezse mock datayı kullan
-        setUsers(usersMock);
+        console.error("Kullanıcılar alınamadı", e);
       }
       setLoading(false);
     };
     fetchUsers();
   }, []);
 
-  // Dummy feedbacks (API ile bağlanınca değiştirilebilir)
-  const feedbacks = [
-    { id: 101, user: "Mehmet Can", subject: "Mama Haznesi", message: "Mekanizma bazen ses çıkarıyor.", status: "Açık", date: "2 saat önce", variant: "error" },
-    { id: 102, user: "Ece Su", subject: "Mobil Uygulama", message: "Bağlantı hızı harika!", status: "Çözüldü", date: "1 gün önce", variant: "success" },
-  ];
+  const feedbacks = []; // API entegre edilene kadar boş bırakılabilir
+
 
   return (
     <div className="w-full max-w-7xl animate-fade-in space-y-10 pb-10">
