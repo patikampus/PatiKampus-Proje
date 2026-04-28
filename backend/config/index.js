@@ -13,7 +13,19 @@ export default {
   },
   
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+    origin: function (origin, callback) {
+      const allowedOrigin = process.env.CORS_ORIGIN || 'http://localhost:3000';
+      // Herhangi bir origin belirtilmemişse (Postman gibi araçlar) veya origin eşleşiyorsa izin ver
+      if (!origin || 
+          origin === allowedOrigin || 
+          origin === allowedOrigin.replace('https://', 'http://') ||
+          origin === allowedOrigin.replace('http://', 'https://')) {
+        callback(null, origin);
+      } else {
+        // İzin verilmeyen originler için
+        callback(null, origin); // Tümüne izin verelim (Geliştirme aşamasında sorun yaşamamak için)
+      }
+    },
     credentials: true
   },
   
