@@ -18,7 +18,7 @@ import { WebView } from 'react-native-webview';
 // URL'yi buradan değiştirin. Frontend'i deploy edince
 // (örn. https://patikampus.vercel.app) bu satıra yapıştırın.
 // ─────────────────────────────────────────────────────────────
-const APP_URL = 'https://example.com';
+const APP_URL = 'https://mamakabi.ikbalperde.com/login';
 
 const THEME_BG = '#0f0c29';
 
