@@ -34,29 +34,29 @@ const Review = () => {
   };
 
   return (
-    <div className="w-full max-w-7xl animate-fade-in space-y-10 pb-10">
+    <div className="w-full max-w-7xl animate-fade-in space-y-6 md:space-y-10 pb-8 md:pb-10">
       {/* Üst Başlık Bölümü */}
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6 px-4">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 px-2 md:px-4">
         <div className="text-center md:text-left">
-          <h2 className="text-4xl font-black text-white tracking-tighter">İnceleme & Onay Merkezi</h2>
-          <p className="text-white/60 mt-1 font-medium italic">Gelen görsel kanıtları doğrulayın ve talepleri yanıtlayın.</p>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tighter">İnceleme & Onay Merkezi</h2>
+          <p className="text-sm md:text-base text-white/60 mt-1 font-medium italic">Gelen görsel kanıtları doğrulayın ve talepleri yanıtlayın.</p>
         </div>
         <div className="flex gap-4">
-          <Badge variant="purple" className="py-2 px-5 bg-purple-500/20 text-white border-purple-500/30 shadow-lg shadow-purple-500/10">
+          <Badge variant="purple" className="py-2 px-4 sm:px-5 bg-purple-500/20 text-white border-purple-500/30 shadow-lg shadow-purple-500/10">
             {photoRequests.length} BEKLEYEN ONAY
           </Badge>
         </div>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-10">
         {/* SOL: Fotoğraf Onay Modülü */}
-        <div className="lg:col-span-7 space-y-8">
+        <div className="lg:col-span-7 space-y-6 md:space-y-8">
           <div className="flex items-center gap-3 px-2">
             <div className="p-2 bg-purple-500/10 rounded-lg border border-purple-500/20 text-purple-400">
               <FiCamera size={20} />
             </div>
-            <h3 className="text-xl font-black text-white uppercase tracking-widest italic">Hazne Kanıtları</h3>
+            <h3 className="text-base md:text-xl font-black text-white uppercase tracking-widest italic">Hazne Kanıtları</h3>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-8">
             {loading ? <div className="text-white">Yükleniyor...</div> : photoRequests.map(req => (
               <GlassCard key={req.id || req.FotoId} className="group overflow-hidden border-white/10 flex flex-col h-full shadow-2xl">
                 {/* Fotoğraf Alanı */}
@@ -79,19 +79,19 @@ const Review = () => {
                   </button>
                 </div>
                 {/* Bilgi ve Butonlar */}
-                <div className="p-6 bg-gradient-to-b from-white/[0.02] to-transparent flex-grow flex flex-col">
-                  <div className="flex items-center gap-4 mb-8">
-                    <div className="w-11 h-11 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl border border-white/10 flex items-center justify-center text-indigo-300 shadow-inner">
+                <div className="p-5 md:p-6 bg-gradient-to-b from-white/[0.02] to-transparent flex-grow flex flex-col">
+                  <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8 min-w-0">
+                    <div className="w-10 h-10 md:w-11 md:h-11 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 rounded-2xl border border-white/10 flex items-center justify-center text-indigo-300 shadow-inner shrink-0">
                       <FiUser size={20} />
                     </div>
-                    <div>
-                      <p className="text-base font-black text-white tracking-wide">{req.user || req.KullaniciAdi || req.YukleyenKullaniciId}</p>
-                      <p className="text-[11px] text-white/40 flex items-center gap-1.5 mt-1 font-bold">
-                        <FiClock className="text-purple-400" /> {req.date || req.YuklemeZamani} yüklendi
+                    <div className="min-w-0">
+                      <p className="text-sm md:text-base font-black text-white tracking-wide truncate">{req.user || req.KullaniciAdi || req.YukleyenKullaniciId}</p>
+                      <p className="text-[11px] text-white/40 flex items-center gap-1.5 mt-1 font-bold truncate">
+                        <FiClock className="text-purple-400 shrink-0" /> {req.date || req.YuklemeZamani} yüklendi
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-4 mt-auto">
+                  <div className="flex gap-3 md:gap-4 mt-auto">
                     <GlassButton 
                       variant="success" 
                       className="flex-1 py-3 text-white font-black text-xs uppercase tracking-widest border-green-500/20 hover:bg-green-500/20" 
@@ -121,33 +121,33 @@ const Review = () => {
           )}
         </div>
         {/* SAĞ: Geri Bildirim Paneli */}
-        <div className="lg:col-span-5 space-y-8">
+        <div className="lg:col-span-5 space-y-6 md:space-y-8">
           <div className="flex items-center gap-3 px-2">
             <div className="p-2 bg-blue-500/10 rounded-lg border border-blue-500/20 text-blue-400">
               <FiMessageCircle size={20} />
             </div>
-            <h3 className="text-xl font-black text-white uppercase tracking-widest italic">Bildirim Akışı</h3>
+            <h3 className="text-base md:text-xl font-black text-white uppercase tracking-widest italic">Bildirim Akışı</h3>
           </div>
-          <div className="space-y-5">
+          <div className="space-y-4 md:space-y-5">
             {loading ? <div className="text-white">Yükleniyor...</div> : feedbacks.map(fb => (
-              <GlassCard key={fb.id || fb.AnomaliId} className="p-8 border-white/10 relative overflow-hidden group" hover={true}>
+              <GlassCard key={fb.id || fb.AnomaliId} className="p-5 md:p-8 border-white/10 relative overflow-hidden group" hover={true}>
                 {/* Background Glow */}
                 <div className={`absolute -top-10 -right-10 w-32 h-32 blur-[60px] opacity-10 rounded-full ${fb.status === 'Açık' || fb.Durum === 'ACIK' ? 'bg-red-500' : 'bg-green-500'}`} />
-                <div className="flex justify-between items-start mb-6 relative z-10">
-                  <Badge variant={fb.variant || (fb.Durum === 'ACIK' ? 'error' : 'success')} className="text-white border-white/20 font-black">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-4 md:mb-6 relative z-10">
+                  <Badge variant={fb.variant || (fb.Durum === 'ACIK' ? 'error' : 'success')} className="text-white border-white/20 font-black self-start">
                     {(fb.status || fb.Durum)?.toUpperCase()}
                   </Badge>
-                  <div className="text-right">
+                  <div className="sm:text-right">
                     <p className="text-sm font-black text-white tracking-wide">{fb.user || fb.KullaniciAdi || fb.MamaKabiId}</p>
                     <p className="text-[10px] text-indigo-300 font-black uppercase tracking-widest mt-1 italic">{fb.subject || fb.AnomaliId}</p>
                   </div>
                 </div>
-                <div className="bg-white/[0.03] p-5 rounded-2xl border border-white/5 mb-6 shadow-inner group-hover:bg-white/[0.05] transition-all">
-                   <p className="text-sm text-white/70 leading-relaxed font-medium italic">
+                <div className="bg-white/[0.03] p-4 md:p-5 rounded-2xl border border-white/5 mb-4 md:mb-6 shadow-inner group-hover:bg-white/[0.05] transition-all">
+                   <p className="text-sm text-white/70 leading-relaxed font-medium italic break-words">
                     "{fb.message || `Ağırlık: ${fb.Agirlik ?? '-'}kg, Yükseklik: ${fb.Yukseklik ?? '-'}cm`}"
                   </p>
                 </div>
-                <div className="flex justify-end gap-3 relative z-10">
+                <div className="flex flex-wrap justify-end gap-3 relative z-10">
                   <GlassButton variant="outline" className="text-[10px] py-2 border-white/10 text-white/60 hover:text-white font-black tracking-widest uppercase">
                     <FiInfo size={14} /> DETAY
                   </GlassButton>

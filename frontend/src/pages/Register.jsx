@@ -66,17 +66,17 @@ function Register() {
     <div className="relative min-h-screen w-full flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 bg-[#0f0c29] selection:bg-purple-500/30 overflow-hidden">
 
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute top-[20%] right-[-5%] w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-10%] left-[30%] w-[600px] h-[600px] bg-indigo-900/40 rounded-full blur-[150px]" />
+        <div className="absolute top-[-10%] left-[-5%] w-[280px] h-[280px] md:w-[500px] md:h-[500px] bg-purple-600/30 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
+        <div className="absolute top-[20%] right-[-5%] w-[240px] h-[240px] md:w-[400px] md:h-[400px] bg-blue-600/20 rounded-full blur-[70px] md:blur-[100px]" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[320px] h-[320px] md:w-[600px] md:h-[600px] bg-indigo-900/40 rounded-full blur-[100px] md:blur-[150px]" />
       </div>
 
       <div className="relative z-10 w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 transition-transform duration-500 hover:rotate-0 mb-4">
-            <FaPaw className="text-white text-3xl" />
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="mx-auto w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 rounded-2xl flex items-center justify-center shadow-lg transform -rotate-3 transition-transform duration-500 hover:rotate-0 mb-4">
+            <FaPaw className="text-white text-2xl sm:text-3xl" />
           </div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-white drop-shadow-md">
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-md">
             Pati<span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-300 to-blue-300">Kampus</span>
           </h2>
           <p className="mt-2 text-sm text-white/60">
@@ -84,7 +84,7 @@ function Register() {
           </p>
         </div>
 
-        <div className="bg-white/[0.05] backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ring-1 ring-white/20 rounded-2xl p-8">
+        <div className="bg-white/[0.05] backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ring-1 ring-white/20 rounded-2xl p-5 sm:p-8">
           <form className="space-y-5" onSubmit={handleRegister}>
             {error && (
               <div className="bg-red-500/10 border-l-4 border-red-500 p-4 rounded-md">

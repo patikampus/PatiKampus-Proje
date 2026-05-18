@@ -9,18 +9,18 @@ const PageLayout = ({ children }) => {
       {/* Arka Plan Dekoratif Objeler (Glass Etkisini Gösterenler Bunlar) */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         {/* Sol Üst Mor Küre */}
-        <div className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute top-[-10%] left-[-5%] w-[280px] h-[280px] md:w-[500px] md:h-[500px] bg-purple-600/30 rounded-full blur-[80px] md:blur-[120px] animate-pulse" />
         {/* Sağ Orta Mavi Küre */}
-        <div className="absolute top-[20%] right-[-5%] w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px]" />
+        <div className="absolute top-[20%] right-[-5%] w-[240px] h-[240px] md:w-[400px] md:h-[400px] bg-blue-600/20 rounded-full blur-[70px] md:blur-[100px]" />
         {/* Alt Orta Indigo Küre */}
-        <div className="absolute bottom-[-10%] left-[30%] w-[600px] h-[600px] bg-indigo-900/40 rounded-full blur-[150px]" />
+        <div className="absolute bottom-[-10%] left-[20%] w-[320px] h-[320px] md:w-[600px] md:h-[600px] bg-indigo-900/40 rounded-full blur-[100px] md:blur-[150px]" />
       </div>
 
       {/* Navbar (Z-Index ile en üstte) */}
       <Navbar />
 
       {/* İçerik Alanı */}
-      <main className="relative z-10 pt-32 pb-12 px-6 flex flex-col items-center min-h-screen">
+      <main className="relative z-10 pt-24 md:pt-32 pb-8 md:pb-12 px-3 sm:px-4 md:px-6 flex flex-col items-center min-h-screen">
         <div className="w-full max-w-7xl mx-auto">
           {children}
         </div>
